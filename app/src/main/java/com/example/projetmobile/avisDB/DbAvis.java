@@ -1,4 +1,4 @@
-package com.example.projetmobile;
+package com.example.projetmobile.avisDB;
 
 import android.content.ContentValues;
 import android.content.Context;

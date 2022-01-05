@@ -1,4 +1,4 @@
-package com.example.projetmobile;
+package com.example.projetmobile.avisDB;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

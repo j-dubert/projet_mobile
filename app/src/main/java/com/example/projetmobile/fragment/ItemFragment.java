@@ -1,6 +1,5 @@
-package com.example.projetmobile;
+package com.example.projetmobile.fragment;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -14,9 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.projetmobile.MyItemRecyclerViewAdapter;
+import com.example.projetmobile.R;
+import com.example.projetmobile.avisDB.AvisSQLite;
+import com.example.projetmobile.avisDB.Avisweb;
 import com.example.projetmobile.placeholder.PlaceholderContent;
 
-import com.example.projetmobile.DbAvis;
+import com.example.projetmobile.avisDB.DbAvis;
 
 import java.util.LinkedList;
 

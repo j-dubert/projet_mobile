@@ -1,4 +1,4 @@
-package com.example.projetmobile;
+package com.example.projetmobile.fragment;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -9,6 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import com.example.projetmobile.R;
+import com.example.projetmobile.avisDB.AvisSQLite;
+import com.example.projetmobile.avisDB.Avisdaptater;
+import com.example.projetmobile.avisDB.Avisweb;
+import com.example.projetmobile.avisDB.DbAvis;
 
 import java.util.LinkedList;
 

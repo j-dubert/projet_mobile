@@ -1,4 +1,4 @@
-package com.example.projetmobile;
+package com.example.projetmobile.avisDB;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,14 +8,16 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.projetmobile.R;
+
 import java.util.LinkedList;
 
-public class AvisWebAdaptater extends ArrayAdapter<Avisweb> {
+public class Avisdaptater extends ArrayAdapter<Avisweb> {
 
     private final Context _context;
     private LinkedList<Avisweb> _avisweb;
 
-    public AvisWebAdaptater(Context context, int resource, LinkedList<Avisweb> aviswebs) {
+    public Avisdaptater(Context context, int resource, LinkedList<Avisweb> aviswebs) {
         super(context, resource, aviswebs);
         _context = context;
         _avisweb = aviswebs;
@@ -30,7 +32,6 @@ public class AvisWebAdaptater extends ArrayAdapter<Avisweb> {
             convertView = (LinearLayout) convertView;
         }
 
-
         TextView viewName = (TextView) convertView.findViewById(R.id.Web);
         viewName.setText(_avisweb.get(position).get_web());
         TextView viewNumber = (TextView) convertView.findViewById(R.id.score);
@@ -38,4 +39,5 @@ public class AvisWebAdaptater extends ArrayAdapter<Avisweb> {
 
 
         return convertView;
-    }}
+    }
+}
