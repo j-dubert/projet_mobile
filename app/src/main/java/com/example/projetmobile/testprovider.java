@@ -12,6 +12,7 @@ public class testprovider {
 
     private static Uri provideruri = Uri.parse("content://com.example.appcontact.provider/T_Contacts");
 
+    /*
     public static void testprovidertest (Context context) throws RemoteException {
         ContentProviderClient yourCR =  context.getContentResolver().acquireContentProviderClient(provideruri );
         Cursor c =yourCR.query(provideruri, null, "*", null, null );
@@ -21,4 +22,7 @@ public class testprovider {
             System.out.println("fuck no");
         };
     }
+    */
+
+
 }
