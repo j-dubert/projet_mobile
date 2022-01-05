@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 public class DbAvis {
     private final static int VERSION_BDD = 1;
-    private SQLiteDatabase bdd;
+    private static SQLiteDatabase bdd;
     private AvisSQLite maBaseSQLite;
     public int id = 0;
 
@@ -26,34 +26,38 @@ public class DbAvis {
         maBaseSQLite.close();
     }
 
-    public SQLiteDatabase getBdd(){
+    public static SQLiteDatabase getBdd(){
+
         return bdd;
     }
 
     public long insertAvis(Avisweb avisweb){
         //Création d'un ContentValues (fonctionne comme une HashMap)
-        open();
         ContentValues values = new ContentValues();
         values.put(AvisSQLite.COLUMN_AVIS_URL,avisweb.get_web());
         values.put(AvisSQLite.COLUMN_AVIS_SCORE,avisweb.get_score());
         long id = bdd.insert(AvisSQLite.TABLE_AVIS,null,values);
-        close();
         return id;
     }
 
-    public boolean findurl(String s){
+    public Avisweb findurl(String s){
         Cursor cursor = bdd.query(AvisSQLite.TABLE_AVIS, new String[]{AvisSQLite.COLUMN_AVIS_URL,AvisSQLite.COLUMN_AVIS_SCORE},
                 AvisSQLite.COLUMN_AVIS_URL+" =?", new String[]{s},null,null,null,null);
-        return cursortoavis(cursor);
+        return cursorToLivre(cursor);
     }
 
-    public boolean cursortoavis(Cursor cursor){
 
+
+    public Avisweb cursorToLivre(Cursor cursor){
         if (cursor.getCount() == 0){
-            return false;
-        }
+            return null;}
         else{
-           return true;
+            cursor.moveToFirst();
+            Avisweb avis1 = new Avisweb();
+            avis1.set_websitename(cursor.getString(0));
+            avis1.set_score(cursor.getInt(1));
+            System.out.println(avis1);
+            return avis1;
         }
     }
 }

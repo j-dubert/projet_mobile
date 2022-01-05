@@ -55,7 +55,10 @@ public class FirstFragment extends Fragment implements View.OnClickListener {
     // 1 - Declare our interface that will be implemented by any container activity
     public interface OnButtonClickedListener {
         public void onButtonClicked(View view);
+
+        public void onButtonClicked2(View v);
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,6 +78,12 @@ public class FirstFragment extends Fragment implements View.OnClickListener {
         View result = inflater.inflate(R.layout.fragment_first, container, false);
 
         result.findViewById(R.id.buttonsrch).setOnClickListener(this);
+        result.findViewById(R.id.evaluer).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.onButtonClicked2(v);
+            }
+        });
 
 
         // Inflate the layout for this fragment

@@ -21,11 +21,21 @@
 
         <Button
 
+            android:id="@+id/buttonsrch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/recherche"
             android:gravity="center"
-            android:text="Rechercher"
-            android:id="@+id/buttonsrch"/>
+            android:text="Rechercher" />
+
+        <Button
+            android:id="@+id/evaluer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recherche"
+            android:layout_marginLeft="128dp"
+            android:layout_marginTop="-3dp"
+            android:layout_toRightOf="@id/buttonsrch"
+            android:text="Evaluer" />
     </RelativeLayout>
 </FrameLayout>

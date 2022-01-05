@@ -1,5 +1,6 @@
 package com.example.projetmobile;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -12,6 +13,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.fragment.app.FragmentManager;
@@ -29,12 +31,16 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.OnB
     ViewPager2 pager2;
     FragmentAdapter adapter;
     private DbAvis avisdb;
+    private boolean hasbeenpause = false;
+    private MainActivity activity;
+    private String str_url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        this.activity=this;
         tabLayout = findViewById(R.id.tab_layout);
         pager2 = findViewById(R.id.view_pager2);
 
@@ -47,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.OnB
         tabLayout.addTab(tabLayout.newTab().setText("Vos Recherches"));
 
         avisdb = new DbAvis(this);
+
+        avisdb.open();
 
 
 
@@ -78,39 +86,94 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.OnB
 
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        if(hasbeenpause){
+            hasbeenpause=false;
+            checkavis(str_url);
+            Toast.makeText(MainActivity.this,"Merci pour votre visite", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    public void checkavis(String str){
+        Avisweb a = avisdb.findurl(str);
+        if(a==null){
+            popupeval();
+        }
+    }
 
     @Override
     public void onButtonClicked(View view) {
 
         TextView url = (TextView)findViewById(R.id.recherche);
-        String test = "http://"+url.getText().toString();
+        str_url = "http://"+url.getText().toString();
+        openIntentWeb(str_url);
+    }
 
-        //Toast.makeText(MainActivity.this, test, Toast.LENGTH_SHORT).show();
+    public void openIntentWeb(String str){
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
         intent.addCategory(Intent.CATEGORY_BROWSABLE);
-        intent.setData(Uri.parse(test));
+        intent.setData(Uri.parse(str));
         startActivity(intent);
-        insertDb(test);
-
-
-
-
-
+        hasbeenpause = true;
 
     }
 
-    public void insertDb(String str){
+    public void popupeval(){
 
-        Avisweb avis = new Avisweb(str,5);
-        boolean boo = avisdb.findurl(str);
-        System.out.println(boo);
-        if(boo==false){
-            avisdb.insertAvis(avis);
-        }else{
-            Toast.makeText(MainActivity.this, "déjà dedans tarba", Toast.LENGTH_SHORT).show();
-        }
-
+        CustomPopup customPopup = new CustomPopup(activity);
+        customPopup.build();
+        customPopup.getButton1().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customPopup.dismiss();
+                insertDb(str_url,1);
+            }
+        });
+        customPopup.getButton2().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customPopup.dismiss();
+                insertDb(str_url,2);
+            }
+        });
+        customPopup.getButton3().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customPopup.dismiss();
+                insertDb(str_url,3);
+            }
+        });
+        customPopup.getButton4().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customPopup.dismiss();
+                insertDb(str_url,4);
+            }
+        });
+        customPopup.getButton5().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customPopup.dismiss();
+                insertDb(str_url,5);
+            }
+        });
     }
+
+    public void insertDb(String str, int i) {
+
+        Avisweb a = new Avisweb(str,i);
+        avisdb.insertAvis(a);
+    }
+
+    @Override
+    public void onButtonClicked2(View view){
+       popupeval();
+    }
+
+
 
 }

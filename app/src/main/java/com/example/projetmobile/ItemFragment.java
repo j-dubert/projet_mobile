@@ -1,6 +1,8 @@
 package com.example.projetmobile;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.projetmobile.placeholder.PlaceholderContent;
+
+import com.example.projetmobile.DbAvis;
 
 /**
  * A fragment representing a list of Items.
@@ -48,6 +52,32 @@ public class ItemFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+
+
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
+
+
+
+    }
+
+    public void readbdd(){
+
+
+        Cursor c = DbAvis.getBdd().query(AvisSQLite.TABLE_AVIS, new String[]{AvisSQLite.COLUMN_AVIS_URL,AvisSQLite.COLUMN_AVIS_SCORE},
+                "*",null,null,null,AvisSQLite.COLUMN_AVIS_SCORE);
+        if(c==null){
+
+        }else{
+            c.moveToFirst();
+            while (c.moveToNext()){
+                Avisweb a = new Avisweb(c.getString(c.getColumnIndex(AvisSQLite.COLUMN_AVIS_URL)),
+                        c.getInt(c.getColumnIndex(AvisSQLite.COLUMN_AVIS_SCORE)));
+            }
+        }
+
     }
 
     @Override
@@ -67,5 +97,6 @@ public class ItemFragment extends Fragment {
             recyclerView.setAdapter(new MyItemRecyclerViewAdapter(PlaceholderContent.ITEMS));
         }
         return view;
+
     }
 }
