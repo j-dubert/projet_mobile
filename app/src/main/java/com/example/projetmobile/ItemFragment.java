@@ -18,6 +18,8 @@ import com.example.projetmobile.placeholder.PlaceholderContent;
 
 import com.example.projetmobile.DbAvis;
 
+import java.util.LinkedList;
+
 /**
  * A fragment representing a list of Items.
  */
@@ -54,10 +56,12 @@ public class ItemFragment extends Fragment {
         }
 
 
+
     }
     @Override
     public void onResume(){
         super.onResume();
+        readbdd();
 
 
 
@@ -65,17 +69,22 @@ public class ItemFragment extends Fragment {
 
     public void readbdd(){
 
-
+        LinkedList<Avisweb> a1 = new LinkedList<>();
         Cursor c = DbAvis.getBdd().query(AvisSQLite.TABLE_AVIS, new String[]{AvisSQLite.COLUMN_AVIS_URL,AvisSQLite.COLUMN_AVIS_SCORE},
-                "*",null,null,null,AvisSQLite.COLUMN_AVIS_SCORE);
+                null,null,null,null,AvisSQLite.COLUMN_AVIS_SCORE);
         if(c==null){
 
         }else{
             c.moveToFirst();
             while (c.moveToNext()){
-                Avisweb a = new Avisweb(c.getString(c.getColumnIndex(AvisSQLite.COLUMN_AVIS_URL)),
-                        c.getInt(c.getColumnIndex(AvisSQLite.COLUMN_AVIS_SCORE)));
+                Avisweb a = new Avisweb(c.getString(c.getColumnIndexOrThrow(AvisSQLite.COLUMN_AVIS_URL)),
+                        c.getInt(c.getColumnIndexOrThrow(AvisSQLite.COLUMN_AVIS_SCORE)));
+                System.out.println(a);
+                a1.add(a);
+
+
             }
+            System.out.println(a1);
         }
 
     }

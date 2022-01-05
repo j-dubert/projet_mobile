@@ -1,10 +1,14 @@
 package com.example.projetmobile;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.RemoteException;
 import android.view.View;
 import android.widget.Button;
@@ -16,15 +20,28 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity implements FirstFragment.OnButtonClickedListener {
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 
     SearchView simpleSearchView;
     TabLayout tabLayout;
@@ -34,13 +51,14 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.OnB
     private boolean hasbeenpause = false;
     private MainActivity activity;
     private String str_url;
+    private View v;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.activity=this;
+        this.activity = this;
         tabLayout = findViewById(R.id.tab_layout);
         pager2 = findViewById(R.id.view_pager2);
 
@@ -57,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.OnB
         avisdb.open();
 
 
+        readfile(v);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -83,23 +102,22 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.OnB
         });
 
 
-
     }
 
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
-        if(hasbeenpause){
-            hasbeenpause=false;
+        if (hasbeenpause) {
+            hasbeenpause = false;
             checkavis(str_url);
-            Toast.makeText(MainActivity.this,"Merci pour votre visite", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Merci pour votre visite", Toast.LENGTH_SHORT).show();
         }
 
     }
 
-    public void checkavis(String str){
+    public void checkavis(String str) {
         Avisweb a = avisdb.findurl(str);
-        if(a==null){
+        if (a == null) {
             popupeval();
         }
     }
@@ -107,12 +125,12 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.OnB
     @Override
     public void onButtonClicked(View view) {
 
-        TextView url = (TextView)findViewById(R.id.recherche);
-        str_url = "http://"+url.getText().toString();
+        TextView url = (TextView) findViewById(R.id.recherche);
+        str_url = "http://" + url.getText().toString();
         openIntentWeb(str_url);
     }
 
-    public void openIntentWeb(String str){
+    public void openIntentWeb(String str) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_VIEW);
         intent.addCategory(Intent.CATEGORY_BROWSABLE);
@@ -122,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.OnB
 
     }
 
-    public void popupeval(){
+    public void popupeval() {
 
         CustomPopup customPopup = new CustomPopup(activity);
         customPopup.build();
@@ -130,49 +148,75 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.OnB
             @Override
             public void onClick(View v) {
                 customPopup.dismiss();
-                insertDb(str_url,1);
+                insertDb(str_url, 1);
             }
         });
         customPopup.getButton2().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 customPopup.dismiss();
-                insertDb(str_url,2);
+                insertDb(str_url, 2);
             }
         });
         customPopup.getButton3().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 customPopup.dismiss();
-                insertDb(str_url,3);
+                insertDb(str_url, 3);
             }
         });
         customPopup.getButton4().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 customPopup.dismiss();
-                insertDb(str_url,4);
+                insertDb(str_url, 4);
             }
         });
         customPopup.getButton5().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 customPopup.dismiss();
-                insertDb(str_url,5);
+                insertDb(str_url, 5);
             }
         });
     }
 
     public void insertDb(String str, int i) {
 
-        Avisweb a = new Avisweb(str,i);
+        Avisweb a = new Avisweb(str, i);
         avisdb.insertAvis(a);
     }
 
     @Override
-    public void onButtonClicked2(View view){
-       popupeval();
+    public void onButtonClicked2(View view) {
+        popupeval();
     }
+
+
+    public void readfile(View v) {
+
+        String FILENAME = "test.txt";
+        StringBuilder sb = new StringBuilder();
+        try {
+            File textFile = new File(Environment.getExternalStoragePublicDirectory(
+                    Environment.DIRECTORY_DOWNLOADS), FILENAME);
+            FileInputStream fis = new FileInputStream(textFile);
+            if (fis != null) {
+                InputStreamReader isr = new InputStreamReader(fis);
+                BufferedReader buff = new BufferedReader(isr);
+                String line = null;
+                while ((line = buff.readLine()) != null) {
+                    sb.append(line + "\n");
+
+                }
+                fis.close();
+                System.out.println(sb);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 
