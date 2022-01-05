@@ -127,8 +127,17 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.OnB
 
         TextView url = (TextView) findViewById(R.id.recherche);
         str_url = "http://" + url.getText().toString();
-        openIntentWeb(str_url);
-    }
+        Avisweb a = avisdb.findurl(str_url);
+        if(a!=null){
+            if(a.get_score()<3){
+                Toast.makeText(MainActivity.this, " Le site n'est pas fiable", Toast.LENGTH_SHORT).show();
+            }else{openIntentWeb(str_url);
+                Toast.makeText(MainActivity.this, " Le site est fiable", Toast.LENGTH_SHORT).show();}
+        }else{
+            openIntentWeb(str_url);}
+
+        }
+
 
     public void openIntentWeb(String str) {
         Intent intent = new Intent();
@@ -187,9 +196,75 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.OnB
         avisdb.insertAvis(a);
     }
 
+    public void updateAvis(String str, int i){
+        Avisweb a = new Avisweb(str, i);
+        avisdb.updateavis(a);
+    }
+
     @Override
     public void onButtonClicked2(View view) {
-        popupeval();
+        TextView url = (TextView) findViewById(R.id.recherche);
+        str_url = url.getText().toString();
+        if(str_url.isEmpty()){
+            Toast.makeText(MainActivity.this, "Veuillez saisir une URL", Toast.LENGTH_SHORT).show();
+        }else{
+            str_url = "http://" + str_url;
+            try {
+                Avisweb a = avisdb.findurl(str_url);
+                if(a!=null){
+                    popupevalUpdate();
+                }else{
+                    System.out.println(a);
+                    popupeval();
+                }
+            }catch(Exception e){
+                Toast.makeText(MainActivity.this, "Veuillez saisir une URL", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+
+    }
+
+
+    public void popupevalUpdate() {
+
+        CustomPopup customPopup2 = new CustomPopup(activity);
+        customPopup2.build();
+        customPopup2.getButton1().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customPopup2.dismiss();
+                updateAvis(str_url, 1);
+            }
+        });
+        customPopup2.getButton2().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customPopup2.dismiss();
+                updateAvis(str_url, 2);
+            }
+        });
+        customPopup2.getButton3().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customPopup2.dismiss();
+                updateAvis(str_url, 3);
+            }
+        });
+        customPopup2.getButton4().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customPopup2.dismiss();
+                updateAvis(str_url, 4);
+            }
+        });
+        customPopup2.getButton5().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                customPopup2.dismiss();
+                updateAvis(str_url, 5);
+            }
+        });
     }
 
 

@@ -37,7 +37,14 @@ public class DbAvis {
         values.put(AvisSQLite.COLUMN_AVIS_URL,avisweb.get_web());
         values.put(AvisSQLite.COLUMN_AVIS_SCORE,avisweb.get_score());
         long id = bdd.insert(AvisSQLite.TABLE_AVIS,null,values);
+
         return id;
+    }
+
+    public void updateavis(Avisweb avisweb){
+        ContentValues cv = new ContentValues();
+        cv.put(AvisSQLite.COLUMN_AVIS_SCORE, avisweb.get_score());
+        bdd.update(AvisSQLite.TABLE_AVIS,cv,AvisSQLite.COLUMN_AVIS_URL+"=?", new String[]{avisweb.get_web()});
     }
 
     public Avisweb findurl(String s){
