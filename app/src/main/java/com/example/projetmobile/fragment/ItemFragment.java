@@ -1,23 +1,19 @@
 package com.example.projetmobile.fragment;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.projetmobile.MyItemRecyclerViewAdapter;
+import com.example.projetmobile.AvisRecyclerViewAdaptater;
 import com.example.projetmobile.R;
 import com.example.projetmobile.avisDB.AvisSQLite;
 import com.example.projetmobile.avisDB.Avisweb;
-import com.example.projetmobile.placeholder.PlaceholderContent;
 
 import com.example.projetmobile.avisDB.DbAvis;
 
@@ -64,31 +60,8 @@ public class ItemFragment extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
-        readbdd();
 
 
-
-    }
-
-    public void readbdd(){
-
-        LinkedList<Avisweb> a1 = new LinkedList<>();
-        Cursor c = DbAvis.getBdd().query(AvisSQLite.TABLE_AVIS, new String[]{AvisSQLite.COLUMN_AVIS_URL,AvisSQLite.COLUMN_AVIS_SCORE},
-                null,null,null,null,AvisSQLite.COLUMN_AVIS_SCORE);
-        if(c==null){
-
-        }else{
-            c.moveToFirst();
-            while (c.moveToNext()){
-                Avisweb a = new Avisweb(c.getString(c.getColumnIndexOrThrow(AvisSQLite.COLUMN_AVIS_URL)),
-                        c.getInt(c.getColumnIndexOrThrow(AvisSQLite.COLUMN_AVIS_SCORE)));
-                System.out.println(a);
-                a1.add(a);
-
-
-            }
-            System.out.println(a1);
-        }
 
     }
 
@@ -97,17 +70,23 @@ public class ItemFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_item_list, container, false);
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(PlaceholderContent.ITEMS));
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
+
+        LinkedList<Avisweb> a1 = new LinkedList<>();
+        Cursor c = DbAvis.getBdd().query(AvisSQLite.TABLE_AVIS, new String[]{AvisSQLite.COLUMN_AVIS_URL,AvisSQLite.COLUMN_AVIS_SCORE},
+                null,null,null,null,AvisSQLite.COLUMN_AVIS_SCORE);
+;            c.moveToFirst();
+        while (c.moveToNext()){
+            Avisweb a = new Avisweb(c.getString(c.getColumnIndexOrThrow(AvisSQLite.COLUMN_AVIS_URL)),
+                    c.getInt(c.getColumnIndexOrThrow(AvisSQLite.COLUMN_AVIS_SCORE)));
+            System.out.println(a);
+            a1.add(a);
         }
+
+        AvisRecyclerViewAdaptater adaptater = new AvisRecyclerViewAdaptater(getContext(), a1);
+
+        recyclerView.setAdapter(adaptater);
+
         return view;
 
     }
