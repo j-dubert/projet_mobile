@@ -116,7 +116,6 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.OnB
 
     @Override
     public void onButtonClicked(View view) {
-
         TextView url = (TextView) findViewById(R.id.recherche);
         str_url = "http://" + url.getText().toString();
         Avisweb a = avisdb.findurl(str_url);
@@ -191,12 +190,14 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.OnB
     public void updateAvis(String str, int i){
         Avisweb a = new Avisweb(str, i);
         avisdb.updateavis(a);
+
     }
 
     @Override
     public void onButtonClicked2(View view) {
         TextView url = (TextView) findViewById(R.id.recherche);
         str_url = url.getText().toString();
+
         if(str_url.isEmpty()){
             Toast.makeText(MainActivity.this, "Veuillez saisir une URL", Toast.LENGTH_SHORT).show();
         }else{
@@ -210,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.OnB
                     popupeval();
                 }
             }catch(Exception e){
-                Toast.makeText(MainActivity.this, "Veuillez saisir une URL", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "BUG", Toast.LENGTH_SHORT).show();
             }
         }
 
