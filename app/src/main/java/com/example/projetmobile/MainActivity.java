@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
+import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.OnB
     private MainActivity activity;
     private String str_url;
     private View v;
+    RatingBar ratingBar;
+    private View btnvote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.OnB
         tabLayout = findViewById(R.id.tab_layout);
         pager2 = findViewById(R.id.view_pager2);
 
+        ratingBar = findViewById(R.id.rating_Bar);
+        Button btnvote = findViewById(R.id.btnvote);
 
 
         FragmentManager fm = getSupportFragmentManager();
@@ -144,6 +150,23 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.OnB
 
         CustomPopup customPopup = new CustomPopup(activity);
         customPopup.build();
+
+
+        customPopup.getButton1().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                float rating = ratingBar.getRating();
+                System.out.println(rating);
+                int int2 = (int)rating;
+
+                customPopup.dismiss();
+
+                insertDb(str_url, int2);
+
+            }
+        });
+
+/*
         customPopup.getButton1().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -178,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.OnB
                 customPopup.dismiss();
                 insertDb(str_url, 5);
             }
-        });
+        }); */
     }
 
     public void insertDb(String str, int i) {
@@ -223,6 +246,7 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.OnB
 
         CustomPopup customPopup2 = new CustomPopup(activity);
         customPopup2.build();
+        /*
         customPopup2.getButton1().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -257,7 +281,7 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.OnB
                 customPopup2.dismiss();
                 updateAvis(str_url, 5);
             }
-        });
+        });*/
     }
 
 
