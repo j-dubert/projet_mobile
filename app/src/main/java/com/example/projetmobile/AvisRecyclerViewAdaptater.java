@@ -39,7 +39,7 @@ public class AvisRecyclerViewAdaptater extends RecyclerView.Adapter<AvisRecycler
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         holder.url.setText(mData.get(position).get_web());
-        holder.score.setText(mData.get(position).get_score());
+        holder.score.setText(String.valueOf(mData.get(position).get_score()));
 
     }
 

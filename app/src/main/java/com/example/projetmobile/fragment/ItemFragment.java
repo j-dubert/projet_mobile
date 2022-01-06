@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.projetmobile.AvisRecyclerViewAdaptater;
 import com.example.projetmobile.R;
@@ -75,7 +76,6 @@ public class ItemFragment extends Fragment {
         LinkedList<Avisweb> a1 = new LinkedList<>();
         Cursor c = DbAvis.getBdd().query(AvisSQLite.TABLE_AVIS, new String[]{AvisSQLite.COLUMN_AVIS_URL,AvisSQLite.COLUMN_AVIS_SCORE},
                 null,null,null,null,AvisSQLite.COLUMN_AVIS_SCORE);
-;            c.moveToFirst();
         while (c.moveToNext()){
             Avisweb a = new Avisweb(c.getString(c.getColumnIndexOrThrow(AvisSQLite.COLUMN_AVIS_URL)),
                     c.getInt(c.getColumnIndexOrThrow(AvisSQLite.COLUMN_AVIS_SCORE)));
@@ -86,7 +86,6 @@ public class ItemFragment extends Fragment {
         AvisRecyclerViewAdaptater adaptater = new AvisRecyclerViewAdaptater(getContext(), a1);
 
         recyclerView.setAdapter(adaptater);
-
         return view;
 
     }
