@@ -25,6 +25,9 @@ import java.util.LinkedList;
  */
 public class ItemFragment extends Fragment {
 
+    private RecyclerView recyclerView;
+
+
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
@@ -55,27 +58,34 @@ public class ItemFragment extends Fragment {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
 
-
-
     }
-    @Override
+
+
     public void onResume(){
         super.onResume();
-
-
-
+        listbdd(recyclerView);
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_item_list, container, false);
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
+
+         recyclerView = (RecyclerView) view.findViewById(R.id.list);
+
+        listbdd(recyclerView);
+        return view;
+
+    }
+
+    public void listbdd(RecyclerView rv){
 
         LinkedList<Avisweb> a1 = new LinkedList<>();
         Cursor c = DbAvis.getBdd().query(AvisSQLite.TABLE_AVIS, new String[]{AvisSQLite.COLUMN_AVIS_URL,AvisSQLite.COLUMN_AVIS_SCORE},
-                null,null,null,null,AvisSQLite.COLUMN_AVIS_SCORE);
+                null,null,null,null,AvisSQLite.COLUMN_AVIS_SCORE+" DESC");
         while (c.moveToNext()){
             Avisweb a = new Avisweb(c.getString(c.getColumnIndexOrThrow(AvisSQLite.COLUMN_AVIS_URL)),
                     c.getInt(c.getColumnIndexOrThrow(AvisSQLite.COLUMN_AVIS_SCORE)));
@@ -85,8 +95,6 @@ public class ItemFragment extends Fragment {
 
         AvisRecyclerViewAdaptater adaptater = new AvisRecyclerViewAdaptater(getContext(), a1);
 
-        recyclerView.setAdapter(adaptater);
-        return view;
-
+        rv.setAdapter(adaptater);
     }
 }

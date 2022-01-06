@@ -65,8 +65,6 @@ public class FirstFragment extends Fragment implements View.OnClickListener {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-
-
         }
     }
 
@@ -75,7 +73,6 @@ public class FirstFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
 
         View result = inflater.inflate(R.layout.fragment_first, container, false);
-
         result.findViewById(R.id.buttonsrch).setOnClickListener(this);
         result.findViewById(R.id.evaluer).setOnClickListener(new View.OnClickListener() {
             @Override
