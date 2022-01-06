@@ -34,8 +34,6 @@ public class Avisdaptater extends ArrayAdapter<Avisweb> {
 
         TextView viewName = (TextView) convertView.findViewById(R.id.Web);
         viewName.setText(_avisweb.get(position).get_web());
-        TextView viewNumber = (TextView) convertView.findViewById(R.id.score);
-        viewNumber.setText(_avisweb.get(position).get_score());
 
 
         return convertView;

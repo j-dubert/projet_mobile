@@ -1,10 +1,12 @@
 package com.example.projetmobile;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -39,7 +41,33 @@ public class AvisRecyclerViewAdaptater extends RecyclerView.Adapter<AvisRecycler
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
         holder.url.setText(mData.get(position).get_web());
-        holder.score.setText(String.valueOf(mData.get(position).get_score()));
+
+        int yellow = Color.argb(255, 255, 255, 0);
+        int white = Color.argb(255, 255, 255, 255);
+        holder.etoile1.setColorFilter(yellow);
+        if(mData.get(position).get_score()>=2){
+            holder.etoile2.setColorFilter(yellow);
+        }else{
+            holder.etoile2.setColorFilter(white);
+        }
+
+        if(mData.get(position).get_score()>=3){
+            holder.etoile3.setColorFilter(yellow);
+        }else{
+            holder.etoile3.setColorFilter(white);
+        }
+
+        if(mData.get(position).get_score()>=4){
+            holder.etoile4.setColorFilter(yellow);
+        }else{
+            holder.etoile4.setColorFilter(white);
+        }
+
+        if(mData.get(position).get_score()>=5){
+            holder.etoile5.setColorFilter(yellow);
+        }else{
+            holder.etoile5.setColorFilter(white);
+        }
 
     }
 
@@ -51,13 +79,21 @@ public class AvisRecyclerViewAdaptater extends RecyclerView.Adapter<AvisRecycler
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         private TextView url;
-        private TextView score;
+        private ImageView etoile1;
+        private ImageView etoile2;
+        private ImageView etoile3;
+        private ImageView etoile4;
+        private ImageView etoile5;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             url = (TextView) itemView.findViewById(R.id.Web);
-            score = (TextView) itemView.findViewById(R.id.score);
+            etoile1 = (ImageView) itemView.findViewById(R.id.etoile1);
+            etoile2 = (ImageView) itemView.findViewById(R.id.etoile2);
+            etoile3 = (ImageView) itemView.findViewById(R.id.etoile3);
+            etoile4 = (ImageView) itemView.findViewById(R.id.etoile4);
+            etoile5 = (ImageView) itemView.findViewById(R.id.etoile5);
 
 
         }
