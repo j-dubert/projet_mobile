@@ -44,28 +44,19 @@ public class AvisRecyclerViewAdaptater extends RecyclerView.Adapter<AvisRecycler
 
         int yellow = Color.argb(255, 255, 255, 0);
         int white = Color.argb(255, 255, 255, 255);
-        holder.etoile1.setColorFilter(yellow);
-        if(mData.get(position).get_score()>=2){
-            holder.etoile2.setColorFilter(yellow);
-        }else{
+        if (mData.get(position).get_score() < 2) {
             holder.etoile2.setColorFilter(white);
         }
 
-        if(mData.get(position).get_score()>=3){
-            holder.etoile3.setColorFilter(yellow);
-        }else{
+        if (mData.get(position).get_score() < 3) {
             holder.etoile3.setColorFilter(white);
         }
 
-        if(mData.get(position).get_score()>=4){
-            holder.etoile4.setColorFilter(yellow);
-        }else{
+        if (mData.get(position).get_score() < 4) {
             holder.etoile4.setColorFilter(white);
         }
 
-        if(mData.get(position).get_score()>=5){
-            holder.etoile5.setColorFilter(yellow);
-        }else{
+        if (mData.get(position).get_score() < 5) {
             holder.etoile5.setColorFilter(white);
         }
 
@@ -79,7 +70,6 @@ public class AvisRecyclerViewAdaptater extends RecyclerView.Adapter<AvisRecycler
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         private TextView url;
-        private ImageView etoile1;
         private ImageView etoile2;
         private ImageView etoile3;
         private ImageView etoile4;
@@ -89,7 +79,6 @@ public class AvisRecyclerViewAdaptater extends RecyclerView.Adapter<AvisRecycler
             super(itemView);
 
             url = (TextView) itemView.findViewById(R.id.Web);
-            etoile1 = (ImageView) itemView.findViewById(R.id.etoile1);
             etoile2 = (ImageView) itemView.findViewById(R.id.etoile2);
             etoile3 = (ImageView) itemView.findViewById(R.id.etoile3);
             etoile4 = (ImageView) itemView.findViewById(R.id.etoile4);
