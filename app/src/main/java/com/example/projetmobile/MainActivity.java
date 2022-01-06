@@ -155,53 +155,13 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.OnB
         customPopup.getButton1().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                float rating = ratingBar.getRating();
-                System.out.println(rating);
-                int int2 = (int)rating;
-
+                int rating = (int) customPopup.getratingbar().getRating();
                 customPopup.dismiss();
 
-                insertDb(str_url, int2);
+                insertDb(str_url, rating);
 
             }
         });
-
-/*
-        customPopup.getButton1().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                customPopup.dismiss();
-                insertDb(str_url, 1);
-            }
-        });
-        customPopup.getButton2().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                customPopup.dismiss();
-                insertDb(str_url, 2);
-            }
-        });
-        customPopup.getButton3().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                customPopup.dismiss();
-                insertDb(str_url, 3);
-            }
-        });
-        customPopup.getButton4().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                customPopup.dismiss();
-                insertDb(str_url, 4);
-            }
-        });
-        customPopup.getButton5().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                customPopup.dismiss();
-                insertDb(str_url, 5);
-            }
-        }); */
     }
 
     public void insertDb(String str, int i) {
@@ -246,42 +206,18 @@ public class MainActivity extends AppCompatActivity implements FirstFragment.OnB
 
         CustomPopup customPopup2 = new CustomPopup(activity);
         customPopup2.build();
-        /*
+
         customPopup2.getButton1().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int rating = (int) customPopup2.getratingbar().getRating();
                 customPopup2.dismiss();
-                updateAvis(str_url, 1);
+
+                updateAvis(str_url, rating);
+
             }
         });
-        customPopup2.getButton2().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                customPopup2.dismiss();
-                updateAvis(str_url, 2);
-            }
-        });
-        customPopup2.getButton3().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                customPopup2.dismiss();
-                updateAvis(str_url, 3);
-            }
-        });
-        customPopup2.getButton4().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                customPopup2.dismiss();
-                updateAvis(str_url, 4);
-            }
-        });
-        customPopup2.getButton5().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                customPopup2.dismiss();
-                updateAvis(str_url, 5);
-            }
-        });*/
+
     }
 
 

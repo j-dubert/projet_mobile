@@ -2,6 +2,7 @@ package com.example.projetmobile;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.graphics.Color;
 import android.widget.Button;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ public class CustomPopup extends Dialog {
         this.subTitle = "Veuillez évaluer votre visiite";
         this.rat1 = findViewById(R.id.rating_Bar);
         this.button1 = findViewById(R.id.btnvote);
+        this.button1.setBackgroundColor(Color.argb(255, 156, 39, 176));
 
         /*
 
