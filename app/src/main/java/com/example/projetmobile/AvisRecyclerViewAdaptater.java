@@ -1,7 +1,9 @@
 package com.example.projetmobile;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +44,17 @@ public class AvisRecyclerViewAdaptater extends RecyclerView.Adapter<AvisRecycler
 
         holder.url.setText(mData.get(position).get_web());
 
-        int yellow = Color.argb(255, 255, 255, 0);
+        holder.url.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse(holder.url.getText().toString()));
+                mContext.startActivity(intent);
+            }
+        });
+
         int white = Color.argb(255, 255, 255, 255);
         if (mData.get(position).get_score() < 2) {
             holder.etoile2.setColorFilter(white);
@@ -83,7 +95,6 @@ public class AvisRecyclerViewAdaptater extends RecyclerView.Adapter<AvisRecycler
             etoile3 = (ImageView) itemView.findViewById(R.id.etoile3);
             etoile4 = (ImageView) itemView.findViewById(R.id.etoile4);
             etoile5 = (ImageView) itemView.findViewById(R.id.etoile5);
-
 
         }
     }
